@@ -25,7 +25,6 @@ class App extends Component {
   };
 
   dateInputChange = (e) => {
-    console.log(e.target.value, "target");
     this.setState({ ...this.tate, dueDate: e.target.value });
   };
 
@@ -34,7 +33,6 @@ class App extends Component {
   };
 
   render() {
-    console.log(this.state.dueDate);
     return (
       <div className="container">
         <header className="header">

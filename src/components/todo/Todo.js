@@ -50,8 +50,6 @@ const Todo = (props) => {
     return `todo-item ${isComplete ? "complete" : "incomplete"}`;
   };
 
-  console.log(props);
-
   return (
     <div className={getClassName()}>
       <input
