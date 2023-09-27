@@ -5,7 +5,11 @@ export const TodoModel = {
   text: PropTypes.string.isRequired,
   isComplete: PropTypes.bool.isRequired,
   type: PropTypes.oneOf(["MustDo", "Optional"]),
-  dueDate: PropTypes.instanceOf(Date),
+  dueDate: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.instanceOf(Date),
+  ]),
 };
 
 export const TodoListModel = {

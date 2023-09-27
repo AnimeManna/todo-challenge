@@ -3,7 +3,8 @@ import {
   ADD_TODO,
   TODO_COMPLETE_CHANGE,
   TODO_TEXT_CHANGE,
-} from "./todoActions";
+  DELETE_TODO,
+} from "./actions";
 
 export const reducer = (state, action) => {
   switch (action.type) {
@@ -35,6 +36,12 @@ export const reducer = (state, action) => {
       return {
         ...state,
         todos: [...state.todos, action.todo],
+      };
+    }
+    case DELETE_TODO: {
+      return {
+        ...state,
+        todos: state.todos.filter((todo) => todo.id !== action.id),
       };
     }
     default:

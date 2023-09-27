@@ -1,45 +1,54 @@
-import React, { useState, useEffect } from "react";
-import Todo from "./Todo";
-import { TodoListModel } from "../../TodoModel";
+import React, { useEffect } from "react";
+
+//models
+import { TodoListModel } from "../../models/todo";
+
+//redux
 import { connect } from "react-redux";
-import { completeTodo, getTodos, updateTextTodo } from "../../todoActions";
+import {
+  completeTodo,
+  deleteTodo,
+  getTodos,
+  updateTextTodo,
+} from "../../store/todo/actions";
+//components
+import Todo from "../todo";
+
+//utils
 import dayjs from "dayjs";
+
+//styles
+import styles from "./styles.module.scss";
 
 const TodoList = ({
   todos,
   getTodos,
   onTodoTextChange,
   onTodoCompleteChange,
+  onTodoDelete,
 }) => {
-  const [filtered, setFiltered] = useState(false);
-
-  const filterByOnChange = () => {
-    setFiltered(!filtered);
-  };
-
   useEffect(() => {
     getTodos();
   }, [getTodos]);
 
   const renderTodoList = (todos) => {
     return todos
-      .filter(filterTodos)
       .sort((a, b) => (dayjs(a.dueDate).isBefore(dayjs(b.dueDate)) ? 1 : -1))
       .map(mapTodoObjectToComponent);
   };
 
-  const filterTodos = (todo) => (filtered ? !todo.isComplete : true);
-
   const mapTodoObjectToComponent = (todo) => (
-    <Todo
-      key={todo.id}
-      todo={todo}
-      onTextChange={onTodoTextChange}
-      onCompleteChange={onTodoCompleteChange}
-    />
+    <li key={todo.id}>
+      <Todo
+        todo={todo}
+        onTextChange={onTodoTextChange}
+        onCompleteChange={onTodoCompleteChange}
+        onTodoDelete={onTodoDelete}
+      />
+    </li>
   );
 
-  return <div className="todo-list">{renderTodoList(todos)}</div>;
+  return <ul className={styles.container}>{renderTodoList(todos)}</ul>;
 };
 
 TodoList.propTypes = TodoListModel;
@@ -52,6 +61,7 @@ const mapDispatchToProps = (dispatch) => ({
   onTodoTextChange: (text, id) => dispatch(updateTextTodo(text, id)),
   onTodoCompleteChange: (todo) => dispatch(completeTodo(todo)),
   getTodos: () => dispatch(getTodos()),
+  onTodoDelete: (id) => dispatch(deleteTodo(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoList);

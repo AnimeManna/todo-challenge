@@ -1,4 +1,4 @@
-.todo-item {
+.container {
   font-size: 14px;
   border: 1px solid black;
   padding: 16px;
@@ -13,18 +13,12 @@
     text-decoration: line-through;
   }
 
-  button {
-    margin-left: 5px;
-  }
-
-  &__info {
+  .info {
     flex: 1;
     margin: 0 5px 0;
   }
-}
 
-.todo-list {
-  display: flex;
-  flex-direction: column;
-  row-gap: 10px;
+  .actions {
+    margin-left: 5px;
+  }
 }
